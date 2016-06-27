@@ -17,11 +17,10 @@ router.get('/', function(req, res, next){
 
   Promise.all([placePromise, hotelPromise, restaurantPromise, activityPromise])
   .then(function(promiseArr){
-    databaseCollection[places] = promiseArr[0];
-    databaseCollection[hotels] = promiseArr[1];
-    databaseCollection[restaurants] = promiseArr[2];
-    databaseCollection[activities] = promiseArr[3];
-
+    databaseCollection['places'] = promiseArr[0];
+    databaseCollection['hotels'] = promiseArr[1];
+    databaseCollection['restaurants'] = promiseArr[2];
+    databaseCollection['activities'] = promiseArr[3];
     res.render('index', databaseCollection);
   });
 });

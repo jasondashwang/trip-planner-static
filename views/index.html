@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% for place in places %}
+<h1>{{place.address}}</h1>
+{% endfor %}
+
+
+
+<!--
+  <h3>Pages</h3>
+  <hr>
+  <form method="GET" action="/wiki/search">
+    <input type="text" name="search" />
+    <button type="submit">Search</button>
+  </form>
+  <hr>
+  <ul class="list-unstyled">
+    <ul>
+      {% for page in pages %}
+      <li>
+        <a href="{{page.route}}">{{page.title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </ul> -->
+{% endblock %}
