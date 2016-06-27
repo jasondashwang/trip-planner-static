@@ -1,7 +1,8 @@
 var Sequelize = require('sequelize');
 var db = require('./');
+var Place = require('./place');
 
-var Restaurant = db.define('Restaurant', {
+var Restaurant = db.define('restaurant', {
     name: {
         type: Sequelize.TEXT,
         allowNull: false
@@ -11,9 +12,11 @@ var Restaurant = db.define('Restaurant', {
         allowNull: false
     },
     price: {
-        type: Sequelize.ENUM(1,2,3,4,5),
+        type: Sequelize.INTEGER,
         allowNull: false
     }
 });
+
+Restaurant.belongsTo(Place);
 
 module.exports = Restaurant;

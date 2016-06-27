@@ -1,7 +1,8 @@
 var Sequelize = require('sequelize');
 var db = require('./');
 
-var Place = db.define('Place', {
+
+var Place = db.define('place', {
     address: {
         type: Sequelize.TEXT,
         allowNull: false
