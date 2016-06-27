@@ -7,3 +7,10 @@ var Place = require('../models/place');
 var Hotel = require('../models/hotel');
 var Restaurant = require('../models/restaurant');
 var Activity = require('../models/activity');
+
+router.get('/', function(req, res, next){
+
+});
+
+
+module.exports = router;
