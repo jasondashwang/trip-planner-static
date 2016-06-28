@@ -198,3 +198,16 @@ button[name="hotels"], button[name="restaurants"], button[name="activities"] {
     height: 100%;
 }
 
+.menu-item {
+    text-align: center;
+}
+
+.menu-item:hover {
+    color: $blue;
+}
+
+.dropdown-menu {
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}

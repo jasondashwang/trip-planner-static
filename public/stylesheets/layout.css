@@ -139,3 +139,14 @@ button[name="hotels"], button[name="restaurants"], button[name="activities"] {
 #map-canvas {
   width: 100%;
   height: 100%; }
+
+.menu-item {
+  text-align: center; }
+
+.menu-item:hover {
+  color: #46bcec; }
+
+.dropdown-menu {
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%); }
