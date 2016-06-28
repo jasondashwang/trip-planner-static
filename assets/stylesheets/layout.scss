@@ -1,0 +1,200 @@
+// media query function
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+// design
+$green: rgba(127, 255, 0, 1);
+$blue: #46bcec;
+$dark-grey: #333;
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+// flexbox layout
+html,
+body,
+.full-screen {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+@mixin flex-container () {
+    display: flex;
+    // set all direct children to not flex
+    > * {
+        flex: 0 0 auto;
+    }
+}
+
+@mixin stretchy () {
+    flex: 1 1 auto;
+}
+
+@mixin column () {
+    flex-direction: column;
+}
+
+.full-screen {
+    @include flex-container();
+    @include column();
+    > .main {
+        @include stretchy();
+        @include flex-container();
+        > .left {
+            @include flex-container();
+            @include column();
+            border-right: 1px solid #e3e3e8;
+            width: 212.85px;
+            @include desktop {
+                width: 303.7px;
+            }
+            > .itinerary {
+                @include flex-container();
+                @include column();
+                height: 95%;
+                justify-content: flex-start;
+            }
+            > .sticky-footer {
+                height: auto;
+                align-self: center;
+            }
+        }
+        > .middle {
+            @include stretchy();
+        }
+
+    }
+}
+
+// CSS reset for bootstrap navbar
+.navbar-inner,
+.navbar-fixed-top .navbar-inner,
+.navbar-fixed-bottom .navbar-inner,
+.navbar-static-top .navbar-inner {
+    background: none;
+    border: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    filter: none;
+    padding: 0;
+}
+.navbar { margin-bottom: 0; }
+.navbar .nav { margin: 0; }
+.navbar .brand,
+.navbar .nav > li > a {
+    margin: 0;
+    padding: 0;
+    text-shadow: none;
+}
+.navbar .btn-navbar,
+.navbar .btn-navbar:hover {
+    background: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    text-shadow: none;
+}
+
+// header
+.header {
+    border-bottom: 1px solid #e3e3e8;
+}
+
+.logo{
+    float: left;
+    color: $dark-grey;
+    font-family: Futura, "Helvetica Neue", Helvetica, sans-serif;
+    margin: 0;
+    border-right: 1px solid #e3e3e8;
+    font-size: 2.1em;
+    padding: 0.3em 0.4em;
+    @include desktop {
+        font-size: 3em;
+        padding: 0.6em 0.4em;
+    }
+}
+
+ .navbar {
+    float: left;
+    > ul {
+        border: none;
+        padding: 0.9em 2em;
+        @include desktop {
+            padding: 2.2em 2em;
+        }
+        > li {
+            display: inline;
+            padding: 0.3em 0.6em 0.3em 0.6em;
+            font-size: 1.1em;
+            @include desktop {
+                padding: 0.4em 0.6em 0.4em 0.6em;
+                font-size: 1.6em;
+            }
+            text-transform: uppercase;
+            a {
+                text-decoration: none;
+                border: none;
+                color: $dark-grey;
+            }
+            > a:hover {
+
+            }
+        }
+        > .active {
+            > a {
+                text-decoration: none;
+                border: none;
+                color: $blue;
+            }
+            > a:hover {
+                text-decoration: none;
+                border: none;
+                color: $blue;
+            }
+        }
+    }
+}
+
+// left column
+form {
+    width: 100%;
+    margin: 20px;
+}
+
+.btn-group {
+    width: 80%;
+}
+
+button[name="hotels"], button[name="restaurants"], button[name="activities"] {
+    width: 100%;
+}
+
+// map
+.middle {
+    overflow: hidden;
+}
+
+#map-canvas {
+    width: 100%;
+    height: 100%;
+}
+

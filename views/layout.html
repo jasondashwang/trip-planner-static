@@ -2,43 +2,80 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{% block title %}Trip planner{% endblock %}</title>
+    <title>Trip Planner</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/layout.css" rel="stylesheet">
   </head>
   <body>
-    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-items">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/wiki">wikistack</a>
+  <div class="full-screen">
+    <div class="header">
+      <div class="logo">
+        <span class="glyphicon glyphicon-map-marker"></span>Trip Planner
+      </div>
+      <!-- nav tabs -->
+      <div class="navbar" role="navigation">
+        <ul class="nav nav-tabs">
+          <li role="tab" data-toggle="tab" class="active"><a href="#">Day 1</a></li>
+          <li role="tab" data-toggle="tab"><a href="#">Day 2</a></li>
+          <li role="tab" data-toggle="tab"><a href="#">Day 3</a></li>
+          <li role="tab" data-toggle="tab"><a href="#"><span class="glyphicon glyphicon-plus"></span></a></li>
+        </ul>
+      </div>
+      <!-- end nav tabs -->
+    </div>
+    <div class="main">
+      <div class="left">
+        <div class="itinerary">
+        {% block content %}{% endblock %}
         </div>
-        <div id="nav-items" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/wiki/">Home</a></li>
-            <li><a href="/wiki/add">About</a></li>
-            <li><a href="/users">Contact</a></li>
-          </ul>
-        </div>
+        <div class="sticky-footer"><a href="#">Home</a> | <a href="#">About</a> | <a href="#">Contact</a></div>
+      </div>
+      <div class="middle">
+        <div id="map-canvas"></div>
       </div>
     </div>
-    <div class="container content">
-      <div class="row">
-        <div class="col-lg-10">
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-lg-2"></div>
-      </div>
-    </div>
-    <div id="footer" class="container text-muted">
-      Trip Planner by Fullstack Academy
-    </div>
+  </div>
+
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwo1ybkay7Pe_5HTATEZibGon2JQrStts&sensor=true"></script>
+    <script type="text/javascript">
+      function initialize_gmaps() {
+        // initialize new google maps LatLng object
+        var myLatlng = new google.maps.LatLng(40.705189,-74.009209);
+        // style: https://snazzymaps.com/style/63022/blue-green
+        var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"administrative.land_parcel","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"simplified"},{"color":"#69be00"},{"lightness":"0"},{"saturation":"0"},{"weight":"1.82"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"on"},{"weight":"3.59"},{"gamma":"0.36"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#006a4d"},{"weight":"0.14"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station.airport","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.bus","elementType":"geometry","stylers":[{"color":"#912e2e"},{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"simplified"},{"color":"#00b2dd"},{"weight":"0.31"},{"lightness":"0"}]}];
+        // Create a new StyledMapType object, passing it the array of styles,
+        // as well as the name to be displayed on the map type control.
+        var styledMap = new google.maps.StyledMapType(styles,
+          {name: "Travel plan"});
+        // set the map options hash
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeControlOptions: {
+              mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+            }
+        };
+        // get the maps div's HTML obj
+        var map_canvas_obj = document.getElementById('map-canvas');
+        // initialize a new Google Map with the options
+        var map = new google.maps.Map(map_canvas_obj, mapOptions);
+        //Associate the styled map with the MapTypeId and set it to display.
+        map.mapTypes.set('map_style', styledMap);
+        map.setMapTypeId('map_style');
+        // Add the marker to the map
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title:"Hello World!"
+        });
+        // Add the marker to the map by calling setMap()
+        marker.setMap(map);
+    }
+
+    $(document).ready(function() {
+        initialize_gmaps();
+    });
+    </script>
   </body>
 </html>
